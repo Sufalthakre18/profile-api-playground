@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 import express from 'express'
 import cors from 'cors'
 import dbConnect from "./config/db.js";
+import seedOnce from "./seedOnce.js";
+
 dotenv.config()
 
 import authRoutes from "./routes/auth.routes.js"
@@ -10,6 +12,7 @@ import profileRoutes from "./routes/profile.routes.js"
 
 
 const app= express();
+seedOnce()
 dbConnect()
 
 app.use(cors())
