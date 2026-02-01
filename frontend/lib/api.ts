@@ -19,13 +19,29 @@ const getHeaders = (): HeadersInit => {
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    const error = await response.json().catch(() => ({
-      error: response.statusText
-    }));
-    throw new Error(error.error || 'Request failed');
+    let message = 'Something went wrong';
+
+    try {
+      const data = await response.json();
+      message = data.error || data.message || message;
+    } catch {
+      if (response.status === 401) {
+        message = 'Invalid email or password';
+      } else if (response.status === 404) {
+        message = 'Resource not found';
+      } else if (response.status >= 500) {
+        message = 'Server error. Please try again later.';
+      } else {
+        message = response.statusText;
+      }
+    }
+
+    throw new Error(message);
   }
+
   return response.json();
 }
+
 
 // Auth API
 export const authApi = {
