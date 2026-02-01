@@ -8,6 +8,7 @@ import SkillsGrid from '@/components/SkillsGrid';
 import ProjectsList from '@/components/ProjectsList';
 import SearchBar from '@/components/SearchBar';
 import Loading from '@/components/Loading';
+import AdminEditButton from '@/components/AdminEditButton';
 
 export default function Home() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -116,6 +117,7 @@ export default function Home() {
       <div>
         <ProjectsList projects={projects} />
       </div>
+       <AdminEditButton />
     </div>
   );
 }
